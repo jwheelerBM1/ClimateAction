@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bluemvmt | Vatican Climate Resilience Review & Cloud Analytics Platform</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              DEFAULT: '#0084B4',
+              hover: '#006B93',
+              light: '#E6F4F9',
+              dark: '#004F6C',
+              accent: '#00A3E0'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .chart-container {
+      position: relative;
+      width: 100%;
+      max-width: 650px;
+      margin-left: auto;
+      margin-right: auto;
+      height: 320px;
+      max-height: 380px;
+    }
+    .sim-chart-container {
+      position: relative;
+      width: 100%;
+      height: 260px;
+      max-height: 300px;
+    }
+    @media (min-width: 768px) {
+      .chart-container {
+        height: 350px;
+      }
+      .sim-chart-container {
+        height: 280px;
+      }
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #0f172a;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #0084B4;
+    }
+  </style>
+</head>
+<!-- Chosen Palette: Bluemvmt Ocean Blue (#0084B4), Slate Neutral (#F8FAFC / #0F172A), Crisp Cyan (#E6F4F9), Accent Blue (#00A3E0) -->
+<!-- Application Structure Plan: Executive resilience portal for Bluemvmt. Features a secure authentication gateway (Password: Blue4You), followed by an interactive dashboard organizing Vatican Summit findings and BCP cloud solutions into 6 thematic modules: Executive Overview, MAST Dual-Timeline Strategy, Super-Pollutants & Health, Subnational Innovations, 9-Point Call to Action, and BCP Cloud Analytics Architecture featuring an upgraded Data Insight AI™ Natural Language Simulator with live illustrative Chart.js rendering. -->
+<!-- Visualization & Content Choices:
+     1. Password Auth Overlay -> Access control -> Simple JS state -> Password: Blue4You.
+     2. Key Impact Metrics -> Goal: Inform -> Dynamic Stat Cards + Unicode icons.
+     3. SLCP Reduction Targets -> Goal: Compare/Measure -> Chart.js Horizontal Bar Chart -> Canvas rendering.
+     4. Emissions Inequity Divide -> Goal: Compare -> Chart.js Doughnut Chart -> Canvas rendering.
+     5. BCP Efficiency Gain -> Goal: Demonstrate -> Chart.js Stacked Bar Chart -> Canvas rendering.
+     6. Data Insight AI Simulator -> Goal: Interactive AI Analysis -> Live natural language execution with dynamic text synthesis + interactive Chart.js canvas generator (Line, Bar, Doughnut) for every query type -> Canvas rendering.
+     7. MAST Paradigm & Call to Action -> Goal: Organize -> Interactive Tabbed Cards & Grid -> Structured HTML/CSS + JS.
+     Confirming NO SVG graphics and NO Mermaid JS used throughout. -->
+<!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+<body class="bg-slate-50 text-slate-800 font-sans antialiased min-h-screen flex flex-col">
+
+  <!-- ========================================== -->
+  <!-- AUTHENTICATION OVERLAY (PASSWORD PROTECTED) -->
+  <!-- ========================================== -->
+  <div id="authOverlay" class="fixed inset-0 bg-slate-950 z-50 flex items-center justify-center p-4 transition-opacity duration-500">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-8 max-w-md w-full shadow-2xl text-center">
+      <div class="flex justify-center mb-6">
+        <img src="BMLogoWhite.png" alt="Bluemvmt Logo" class="h-12 object-contain" id="loginLogo">
+      </div>
+      <h2 class="text-xl font-bold text-white mb-2">Restricted Access Portal</h2>
+      <p class="text-slate-400 text-sm mb-6">Enter password to view the Vatican Climate Resilience Review & BCP Analytics Executive Platform.</p>
+      
+      <form id="authForm" onsubmit="handleAuth(event)" class="space-y-4">
+        <div>
+          <input type="password" id="passwordInput" placeholder="Enter Security Password" 
+                 class="w-full px-4 py-3 rounded-lg bg-slate-950 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:border-brand focus:ring-2 focus:ring-brand/30 text-center tracking-widest text-lg transition">
+        </div>
+        <div id="authError" class="hidden text-red-400 text-xs font-semibold bg-red-950/50 border border-red-800/50 py-2 px-3 rounded-md">
+          ⚠️ Incorrect password. Please try again.
+        </div>
+        <button type="submit" 
+                class="w-full py-3 px-6 bg-brand hover:bg-brand-hover text-white font-semibold rounded-lg shadow-lg shadow-brand/20 transition duration-200">
+          Unlock Executive Dashboard
+        </button>
+      </form>
+      <p class="text-slate-500 text-xs mt-6">Protected Transmission • Bluemvmt Cloud Security System</p>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MAIN APPLICATION MAIN CONTENT -->
+  <!-- ========================================== -->
+  <div id="appContainer" class="hidden min-h-screen flex-col flex-1">
+    
+    <!-- Top Navigation Header -->
+    <header class="bg-slate-900 border-b-2 border-brand sticky top-0 z-40 shadow-md">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+        <div class="flex items-center space-x-4">
+          <img src="BMLogoWhite.png" alt="Bluemvmt Logo" class="h-9 object-contain">
+          <span class="hidden md:inline-block h-6 w-px bg-slate-700"></span>
+          <span class="hidden md:inline-block text-xs uppercase tracking-wider text-slate-300 font-semibold">Vatican Executive Summit Review</span>
+        </div>
+        
+        <!-- Navigation Menu -->
+        <nav class="hidden lg:flex space-x-1">
+          <button onclick="scrollToSection('overview')" class="px-3 py-2 text-sm font-medium text-slate-200 hover:text-brand hover:bg-slate-800 rounded-md transition">Overview</button>
+          <button onclick="scrollToSection('mast')" class="px-3 py-2 text-sm font-medium text-slate-200 hover:text-brand hover:bg-slate-800 rounded-md transition">MAST Framework</button>
+          <button onclick="scrollToSection('slcp')" class="px-3 py-2 text-sm font-medium text-slate-200 hover:text-brand hover:bg-slate-800 rounded-md transition">Super-Pollutants</button>
+          <button onclick="scrollToSection('cities')" class="px-3 py-2 text-sm font-medium text-slate-200 hover:text-brand hover:bg-slate-800 rounded-md transition">Subnational</button>
+          <button onclick="scrollToSection('call-to-action')" class="px-3 py-2 text-sm font-medium text-slate-200 hover:text-brand hover:bg-slate-800 rounded-md transition">Call to Action</button>
+          <button onclick="scrollToSection('bcp')" class="px-3 py-2 text-sm font-medium text-white bg-brand hover:bg-brand-hover rounded-md transition">BCP AI Platform</button>
+        </nav>
+
+        <div class="flex items-center space-x-3">
+          <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-900/60 text-emerald-300 border border-emerald-700/50">
+            ● Authenticated
+          </span>
+          <button onclick="lockApp()" class="text-xs text-slate-400 hover:text-white underline">Lock</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Mobile Sub-Nav Bar -->
+    <div class="lg:hidden bg-slate-800 border-b border-slate-700 overflow-x-auto custom-scrollbar flex py-2 px-4 space-x-2 text-xs text-slate-300 whitespace-nowrap">
+      <button onclick="scrollToSection('overview')" class="px-2.5 py-1 bg-slate-700 rounded text-white">Overview</button>
+      <button onclick="scrollToSection('mast')" class="px-2.5 py-1 bg-slate-700 rounded text-white">MAST Paradigm</button>
+      <button onclick="scrollToSection('slcp')" class="px-2.5 py-1 bg-slate-700 rounded text-white">SLCP Abatement</button>
+      <button onclick="scrollToSection('cities')" class="px-2.5 py-1 bg-slate-700 rounded text-white">Cities</button>
+      <button onclick="scrollToSection('call-to-action')" class="px-2.5 py-1 bg-slate-700 rounded text-white">Call to Action</button>
+      <button onclick="scrollToSection('bcp')" class="px-2.5 py-1 bg-brand text-white rounded">BCP AI Platform</button>
+    </div>
+
+    <!-- MAIN BODY CONTENT -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+
+      <!-- SECTION 1: EXECUTIVE HERO & OVERVIEW -->
+      <section id="overview" class="space-y-6">
+        <div class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm relative overflow-hidden">
+          <div class="absolute top-0 left-0 w-2 h-full bg-brand"></div>
+          <div class="flex flex-col md:flex-row justify-between md:items-center gap-6 mb-6">
+            <div>
+              <div class="inline-flex items-center space-x-2 text-xs font-bold uppercase tracking-wider text-brand mb-2 bg-brand-light px-3 py-1 rounded-full">
+                <span>PAS & PASS Vatican Summit Review</span>
+              </div>
+              <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+                From Climate Crisis to Planetary Climate Resilience
+              </h1>
+              <p class="text-slate-600 mt-2 max-w-3xl leading-relaxed">
+                Synthesis of the Pontifical Academy of Sciences (PAS) and Social Sciences (PASS) Joint Summit convened under Pope Francis, integrated with the <strong class="text-slate-900">Bluemvmt Cloud Platform (BCP)</strong> analytics engine to operationalize near-term climate action and planetary adaptation.
+              </p>
+            </div>
+            <div class="bg-slate-900 text-white p-4 rounded-xl shadow-inner border border-slate-800 text-center min-w-[200px]">
+              <div class="text-xs uppercase tracking-widest text-slate-400 font-medium">Primary Directive</div>
+              <div class="text-lg font-extrabold text-brand-accent mt-1">25-Year Sprint</div>
+              <div class="text-xs text-slate-300 mt-1">Halving Near-Term Warming</div>
+            </div>
+          </div>
+
+          <!-- Section Introductory Context -->
+          <p class="text-sm text-slate-600 bg-slate-50 p-4 rounded-lg border border-slate-200 mb-6">
+            <strong>Section Introduction:</strong> This overview synthesizes the summit's core thesis: long-term carbon abatement alone is insufficient to prevent catastrophic near-term impacts. The global community faces dual climate emergencies demanding immediate action against Short-Lived Climate Pollutants (SLCPs) alongside institutional transformations supported by real-time cloud data architectures.
+          </p>
+
+          <!-- Metrics Grid -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl">
+              <div class="text-2xl font-black text-brand">1.5°C</div>
+              <div class="text-xs font-bold text-slate-700 uppercase tracking-wide mt-1">Threshold Breached</div>
+              <div class="text-xs text-slate-500 mt-1">Projected by early 2030s due to thermal inertia.</div>
+            </div>
+            <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl">
+              <div class="text-2xl font-black text-slate-900">5 Million+</div>
+              <div class="text-xs font-bold text-slate-700 uppercase tracking-wide mt-1">Annual Deaths</div>
+              <div class="text-xs text-slate-500 mt-1">Caused by fossil combustion PM2.5 & ozone.</div>
+            </div>
+            <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl">
+              <div class="text-2xl font-black text-slate-900">216 Million</div>
+              <div class="text-xs font-bold text-slate-700 uppercase tracking-wide mt-1">Internal Migrants</div>
+              <div class="text-xs text-slate-500 mt-1">Projected climate displacement by 2050.</div>
+            </div>
+            <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl">
+              <div class="text-2xl font-black text-brand">79%</div>
+              <div class="text-xs font-bold text-slate-700 uppercase tracking-wide mt-1">Data Bottleneck</div>
+              <div class="text-xs text-slate-500 mt-1">Time lost in data wrangling before BCP.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 2: THE MAST PARADIGM & DUAL-TIMELINE -->
+      <section id="mast" class="space-y-6">
+        <div class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm">
+          <div class="border-b border-slate-200 pb-4 mb-6">
+            <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+              <span class="text-brand">◈</span> The MAST Operational Paradigm
+            </h2>
+            <p class="text-sm text-slate-600 mt-1">
+              Mitigation, Adaptation, and Societal Transformation (MAST) expands traditional policy into a synchronized dual-timeline model to manage near-term and long-term climate shocks.
+            </p>
+          </div>
+
+          <!-- Section Introductory Paragraph -->
+          <p class="text-sm text-slate-600 bg-slate-50 p-4 rounded-lg border border-slate-200 mb-6">
+            <strong>Section Purpose:</strong> Explore how the MAST framework dismantles the binary choice between mitigation and adaptation. By contrasting the 25-Year Sprint against the Century Marathon, users can inspect target levers, mechanisms, and structural goals across ecological, municipal, and societal dimensions.
+          </p>
+
+          <!-- Interactive Tabs for MAST Pillars -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-slate-50 border-2 border-brand/40 rounded-xl p-5 hover:border-brand transition">
+              <div class="flex items-center justify-between mb-3">
+                <span class="font-bold text-brand uppercase text-xs tracking-wider">Pillar 1</span>
+                <span class="text-lg">📉</span>
+              </div>
+              <h3 class="font-bold text-slate-900 text-lg mb-2">Mitigation</h3>
+              <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                Rapid abatement of Short-Lived Climate Pollutants (SLCPs) to cut warming rate by half, combined with long-term zero-carbon transition.
+              </p>
+              <ul class="text-xs text-slate-700 space-y-1.5 list-disc pl-4">
+                <li>40-45% Methane reduction by 2030</li>
+                <li>85% Hydrofluorocarbon (HFC) phaseout</li>
+                <li>~300B Tons atmospheric CO2 removal</li>
+              </ul>
+            </div>
+
+            <div class="bg-slate-50 border-2 border-brand/40 rounded-xl p-5 hover:border-brand transition">
+              <div class="flex items-center justify-between mb-3">
+                <span class="font-bold text-brand uppercase text-xs tracking-wider">Pillar 2</span>
+                <span class="text-lg">🌊</span>
+              </div>
+              <h3 class="font-bold text-slate-900 text-lg mb-2">Adaptation</h3>
+              <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                Exposure reduction and climate-proofing built and natural infrastructure through nature-based engineering models.
+              </p>
+              <ul class="text-xs text-slate-700 space-y-1.5 list-disc pl-4">
+                <li>Sponge Planet nature-based solutions</li>
+                <li>Urban coastal & aquifer flood defense</li>
+                <li>Protection of water, food & health safety</li>
+              </ul>
+            </div>
+
+            <div class="bg-slate-50 border-2 border-brand/40 rounded-xl p-5 hover:border-brand transition">
+              <div class="flex items-center justify-between mb-3">
+                <span class="font-bold text-brand uppercase text-xs tracking-wider">Pillar 3</span>
+                <span class="text-lg">🤝</span>
+              </div>
+              <h3 class="font-bold text-slate-900 text-lg mb-2">Societal Transformation</h3>
+              <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                Systemic socio-economic restructuring focused on universal climate literacy, equity, human rights, and market reform.
+              </p>
+              <ul class="text-xs text-slate-700 space-y-1.5 list-disc pl-4">
+                <li>Universal primary/secondary climate literacy</li>
+                <li>Green workforce transition funds</li>
+                <li>Protection for forced climate migrants</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Dual Timeline Interactive Comparison -->
+          <div class="bg-slate-900 text-white rounded-xl p-6 border border-slate-800">
+            <h3 class="text-md font-bold mb-4 text-brand-accent flex items-center gap-2">
+              <span>⏱️</span> Dual-Emergency Operational Framework
+            </h3>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div class="bg-slate-800/80 p-5 rounded-lg border border-slate-700">
+                <div class="flex items-center justify-between text-xs font-bold text-amber-400 uppercase tracking-wider mb-2">
+                  <span>Near-Term Emergency</span>
+                  <span>The 25-Year Sprint</span>
+                </div>
+                <h4 class="text-lg font-bold mb-2">Aerosol Unmasking & SLCP Reduction</h4>
+                <p class="text-xs text-slate-300 leading-relaxed mb-3">
+                  Phasing out fossil fuels rapidly removes cooling sulfate aerosols, uncovering unmasked latent warming. To avoid crossing irreversible tipping points (Greenland/WAIS ice collapse, AMOC shutdown), immediate action on methane, soot, and HFCs provides a crucial temporal bridge.
+                </p>
+                <div class="text-xs text-slate-400 bg-slate-900/60 p-2.5 rounded border border-slate-700">
+                  <strong class="text-slate-200">Core Horizon:</strong> 1 to 25 Years • Halves short-term warming rate.
+                </div>
+              </div>
+
+              <div class="bg-slate-800/80 p-5 rounded-lg border border-slate-700">
+                <div class="flex items-center justify-between text-xs font-bold text-cyan-400 uppercase tracking-wider mb-2">
+                  <span>Long-Term Emergency</span>
+                  <span>The Century Marathon</span>
+                </div>
+                <h4 class="text-lg font-bold mb-2">Economy-Wide Decarbonization & CDR</h4>
+                <p class="text-xs text-slate-300 leading-relaxed mb-3">
+                  Achieving net-zero global CO2 emissions by mid-century while scaling Carbon Dioxide Removal (CDR) to extract 300 billion tons of legacy carbon from the atmosphere to stabilize Earth system thermal equilibrium over centuries.
+                </p>
+                <div class="text-xs text-slate-400 bg-slate-900/60 p-2.5 rounded border border-slate-700">
+                  <strong class="text-slate-200">Core Horizon:</strong> 25 to 100 Years • Full systemic decarbonization.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 3: SUPER-POLLUTANTS (SLCP) & INEQUITY VISUALIZATIONS -->
+      <section id="slcp" class="space-y-6">
+        <div class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm">
+          <div class="border-b border-slate-200 pb-4 mb-6">
+            <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+              <span class="text-brand">📊</span> Super-Pollutant Targets & Climate Inequity
+            </h2>
+            <p class="text-sm text-slate-600 mt-1">
+              Quantitative visualization of targeted pollutant reductions and global climate vulnerability divides.
+            </p>
+          </div>
+
+          <!-- Section Introductory Paragraph -->
+          <p class="text-sm text-slate-600 bg-slate-50 p-4 rounded-lg border border-slate-200 mb-6">
+            <strong>Section Purpose:</strong> Examine empirical data from summit contributors (Hoesung Lee, Veerabhadran Ramanathan, Gabrielle Dreyfus). Interactive charts depict the critical SLCP abatement benchmarks required to alter warming trajectories and the stark socioeconomic divide between global emitters and those bearing climate damages.
+          </p>
+
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Chart 1: SLCP Abatement Targets -->
+            <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 flex flex-col">
+              <div class="mb-4">
+                <h3 class="font-bold text-slate-900 text-base">SLCP Target Reduction Percentages</h3>
+                <p class="text-xs text-slate-500">Required mitigation levels to slow warming rates by half (Relative to baselines)</p>
+              </div>
+              <div class="chart-container my-auto">
+                <canvas id="slcpChart"></canvas>
+              </div>
+              <div class="mt-4 text-xs text-slate-600 bg-white p-3 rounded border border-slate-200">
+                💡 <strong>Key Takeaway:</strong> Methane reduction (40-45%) and Black Carbon soot reduction (35%) deliver immediate thermal cooling benefits within days to years, mitigating extinction risks for coral reefs and Arctic ice sheets.
+              </div>
+            </div>
+
+            <!-- Chart 2: Global Emissions Inequity -->
+            <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 flex flex-col">
+              <div class="mb-4">
+                <h3 class="font-bold text-slate-900 text-base">Global Emissions vs. Losses Disparity</h3>
+                <p class="text-xs text-slate-500">Distribution of global greenhouse gas footprint versus climate losses</p>
+              </div>
+              <div class="chart-container my-auto">
+                <canvas id="inequityChart"></canvas>
+              </div>
+              <div class="mt-4 text-xs text-slate-600 bg-white p-3 rounded border border-slate-200">
+                ⚖️ <strong>Justice Divide:</strong> The wealthiest 1B people emit >50% of GHGs, while the poorest 3B contribute <10% yet incur 75% of climate damages. 46 LDCs contribute only 1% of emissions.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 4: SECTORAL ADAPTATION & SPONGE PLANET MODEL -->
+      <section id="sectoral" class="space-y-6">
+        <div class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm">
+          <div class="border-b border-slate-200 pb-4 mb-6">
+            <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+              <span class="text-brand">🌿</span> Sectoral Integration & Nature-Based Systems
+            </h2>
+            <p class="text-sm text-slate-600 mt-1">
+              Cross-sector solutions spanning urban hydrology, public health co-benefits, food-energy dualities, and financial market reforms.
+            </p>
+          </div>
+
+          <!-- Section Introductory Paragraph -->
+          <p class="text-sm text-slate-600 bg-slate-50 p-4 rounded-lg border border-slate-200 mb-6">
+            <strong>Section Purpose:</strong> Review sectoral policy recommendations presented at the summit. Learn how the Sponge Planet Model replaces brittle gray infrastructure with ecological water retention, how fossil phaseout saves 5M lives annually, and how innovative market mechanisms enforce ecological duties of care.
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Sponge Planet Model -->
+            <div class="border border-slate-200 rounded-xl p-5 hover:shadow-md transition">
+              <div class="flex items-center gap-3 mb-3">
+                <div class="p-2 bg-brand-light text-brand font-bold rounded-lg text-xl">🌧️</div>
+                <div>
+                  <h3 class="font-bold text-slate-900 text-base">Sponge Planet Model (SPM)</h3>
+                  <span class="text-xs text-slate-500">Kongjian Yu & Paul Kirshen</span>
+                </div>
+              </div>
+              <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                Replaces conventional "gray infrastructure" (concrete seawalls, damming) which accelerates flood velocity. SPM applies three core principles:
+              </p>
+              <div class="space-y-2 text-xs">
+                <div class="bg-slate-50 p-2 rounded border border-slate-100">
+                  <strong class="text-brand">1. Retain at Source:</strong> Porous landscapes, urban wetlands & localized pond systems.
+                </div>
+                <div class="bg-slate-50 p-2 rounded border border-slate-100">
+                  <strong class="text-brand">2. Slow Flow Down:</strong> Meandering blue-green waterways and low-elevation vegetation weirs.
+                </div>
+                <div class="bg-slate-50 p-2 rounded border border-slate-100">
+                  <strong class="text-brand">3. Embrace Surplus:</strong> Floodable urban parks, terraced wetlands & elevated architecture.
+                </div>
+              </div>
+            </div>
+
+            <!-- Public Health & Clean Air -->
+            <div class="border border-slate-200 rounded-xl p-5 hover:shadow-md transition">
+              <div class="flex items-center gap-3 mb-3">
+                <div class="p-2 bg-brand-light text-brand font-bold rounded-lg text-xl">🫁</div>
+                <div>
+                  <h3 class="font-bold text-slate-900 text-base">Public Health & Clean Air Co-Benefits</h3>
+                  <span class="text-xs text-slate-500">Jos Lelieveld & Soumya Swaminathan</span>
+                </div>
+              </div>
+              <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                Empirical modeling confirms ambient PM2.5 and tropospheric ozone from fossil fuel combustion cause over 5 million premature deaths annually, concentrated heavily in East & South Asia.
+              </p>
+              <div class="bg-brand-light/50 border border-brand/20 p-3 rounded-lg text-xs text-slate-700 space-y-1">
+                <div><strong>Immediate Health Payoffs:</strong> Rapid reductions in ischemic heart disease, stroke, lung cancer, and persistent pediatric respiratory illnesses.</div>
+                <div><strong>Climate Trauma:</strong> Clinical data (Jyoti Mishra) shows extreme heatwaves drive persistent PTSD, depression, and executive function impairments.</div>
+              </div>
+            </div>
+
+            <!-- Aquavoltaics & Land Use -->
+            <div class="border border-slate-200 rounded-xl p-5 hover:shadow-md transition">
+              <div class="flex items-center gap-3 mb-3">
+                <div class="p-2 bg-brand-light text-brand font-bold rounded-lg text-xl">⚡</div>
+                <div>
+                  <h3 class="font-bold text-slate-900 text-base">Food-Energy Aquavoltaics</h3>
+                  <span class="text-xs text-slate-500">Chien-Te Fan & Chia-Ling Lee</span>
+                </div>
+              </div>
+              <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                Resolving spatial conflicts between renewable solar expansion and agricultural/aquaculture land use using Taiwan aquavoltaic policy frameworks.
+              </p>
+              <p class="text-xs text-slate-600">
+                Utilizes the <strong>Analytic Hierarchy Process (AHP)</strong> to balance solar developer financial returns with local fishermen's livelihood stability and product marketing rights.
+              </p>
+            </div>
+
+            <!-- Market Reform & Trade -->
+            <div class="border border-slate-200 rounded-xl p-5 hover:shadow-md transition">
+              <div class="flex items-center gap-3 mb-3">
+                <div class="p-2 bg-brand-light text-brand font-bold rounded-lg text-xl">⚖️</div>
+                <div>
+                  <h3 class="font-bold text-slate-900 text-base">Market Reform & Duty of Care</h3>
+                  <span class="text-xs text-slate-500">Daniel Esty, Wen-Chen Shih, Melissa Hoffer</span>
+                </div>
+              </div>
+              <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                Replacing traditional shareholder primacy with a legal stakeholder duty of care that eliminates uninternalized environmental externalities.
+              </p>
+              <p class="text-xs text-slate-600">
+                Leverages reformed WTO trade rules to discipline free-riders and deploys Green Banks to finance affordable green housing and municipal clean transit.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 5: SUBNATIONAL MUNICIPAL LEADERSHIP -->
+      <section id="cities" class="space-y-6">
+        <div class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm">
+          <div class="border-b border-slate-200 pb-4 mb-6">
+            <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+              <span class="text-brand">🏙️</span> Subnational Leadership & Civic Innovations
+            </h2>
+            <p class="text-sm text-slate-600 mt-1">
+              Case studies in municipal climate adaptation, governance, and green technology deployment.
+            </p>
+          </div>
+
+          <!-- Section Introductory Paragraph -->
+          <p class="text-sm text-slate-600 bg-slate-50 p-4 rounded-lg border border-slate-200 mb-6">
+            <strong>Section Purpose:</strong> Detail how mayors and governors execute ground-level adaptation. Click through subnational case studies to see real-world policy innovations in Massachusetts, Valencia, São Paulo, and Yokohama.
+          </p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <!-- Massachusetts -->
+            <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 hover:border-brand transition flex flex-col justify-between">
+              <div>
+                <div class="text-xs font-bold text-brand uppercase tracking-wider mb-1">USA</div>
+                <h3 class="font-bold text-slate-900 text-sm">Commonwealth of Massachusetts</h3>
+                <p class="text-xs text-slate-500 mb-3">Gov. Maura Healey & CCO Melissa Hoffer</p>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                  Established the first Cabinet-grade Office of Climate Innovation and Resilience. Launched the Massachusetts Climate Careers Fund using recycled social impact capital for zero-cost green worker training.
+                </p>
+              </div>
+              <div class="mt-4 pt-2 border-t border-slate-200 text-[11px] text-slate-500">
+                Key Focus: Whole-of-Government Mandate
+              </div>
+            </div>
+
+            <!-- Valencia -->
+            <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 hover:border-brand transition flex flex-col justify-between">
+              <div>
+                <div class="text-xs font-bold text-brand uppercase tracking-wider mb-1">Spain</div>
+                <h3 class="font-bold text-slate-900 text-sm">City of Valencia</h3>
+                <p class="text-xs text-slate-500 mb-3">Mayor María José Catalá</p>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                  European Green Capital 2024. Converted Turia Riverbed into a 10 km² urban ecological park. Deployed "Requiem in Power", placing 6,600 solar panels in cemeteries to supply 800 low-income homes.
+                </p>
+              </div>
+              <div class="mt-4 pt-2 border-t border-slate-200 text-[11px] text-slate-500">
+                Key Focus: Social Clean Energy & Urban Parks
+              </div>
+            </div>
+
+            <!-- São Paulo -->
+            <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 hover:border-brand transition flex flex-col justify-between">
+              <div>
+                <div class="text-xs font-bold text-brand uppercase tracking-wider mb-1">Brazil</div>
+                <h3 class="font-bold text-slate-900 text-sm">City of São Paulo</h3>
+                <p class="text-xs text-slate-500 mb-3">Mayor Ricardo Nunes</p>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                  Created Municipal Dept of Climate Change, expanded native Atlantic Forest protection across 26% of city territory, and initiated electrification of 12,000 public diesel buses.
+                </p>
+              </div>
+              <div class="mt-4 pt-2 border-t border-slate-200 text-[11px] text-slate-500">
+                Key Focus: Forest Protection & Transit Fleet EV
+              </div>
+            </div>
+
+            <!-- Yokohama -->
+            <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 hover:border-brand transition flex flex-col justify-between">
+              <div>
+                <div class="text-xs font-bold text-brand uppercase tracking-wider mb-1">Japan</div>
+                <h3 class="font-bold text-slate-900 text-sm">City of Yokohama</h3>
+                <p class="text-xs text-slate-500 mb-3">Mayor Takeharu Yamanaka</p>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                  Mobilized 2,800 active neighborhood volunteer clubs achieving a 43% reduction in household waste, while funding municipal SME energy audits for net-zero transitions.
+                </p>
+              </div>
+              <div class="mt-4 pt-2 border-t border-slate-200 text-[11px] text-slate-500">
+                Key Focus: Civic Waste Reduction & SME Support
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 6: PLANETARY CALL TO ACTION (9 MANDATE DOMAINS) -->
+      <section id="call-to-action" class="space-y-6">
+        <div class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm">
+          <div class="border-b border-slate-200 pb-4 mb-6">
+            <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+              <span class="text-brand">📜</span> Planetary Call to Action Mandates
+            </h2>
+            <p class="text-sm text-slate-600 mt-1">
+              The 9 core directives formalized at page 405 of the Vatican Summit proceedings, establishing resilience as a legal and ethical human right.
+            </p>
+          </div>
+
+          <!-- Section Introductory Paragraph -->
+          <p class="text-sm text-slate-600 bg-slate-50 p-4 rounded-lg border border-slate-200 mb-6">
+            <strong>Section Purpose:</strong> Interactive explorer for the 9 operational mandates. Select any directive below to view its strategic target, legal precedents, and key execution channels.
+          </p>
+
+          <!-- Interactive Accordion Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="mandatesGrid">
+            <!-- Directives dynamically initialized via JavaScript -->
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 7: BLUEMVMT CLOUD PLATFORM (BCP) INTEGRATION & AI SIMULATOR -->
+      <section id="bcp" class="space-y-6">
+        <div class="bg-slate-900 text-white rounded-2xl p-6 sm:p-8 border border-slate-800 shadow-xl">
+          
+          <div class="flex flex-col md:flex-row justify-between md:items-center border-b border-slate-800 pb-6 mb-6 gap-4">
+            <div>
+              <div class="flex items-center gap-3">
+                <img src="BMLogoWhite.png" alt="Bluemvmt Logo" class="h-8 object-contain">
+                <span class="bg-brand/20 text-brand-accent border border-brand/40 text-xs font-bold px-2.5 py-0.5 rounded">PaaS Intelligence</span>
+              </div>
+              <h2 class="text-2xl font-black mt-2 text-white">Operationalizing Resilience via BCP Cloud Architecture</h2>
+              <p class="text-slate-400 text-sm mt-1 max-w-2xl">
+                Bluemvmt Cloud Platform resolves data fragmentation by combining automated ETL ingestion, sensor fusion, and Generative AI (RAG) to convert complex datasets into real-time decision intelligence.
+              </p>
+            </div>
+            <div class="bg-slate-800 p-3 rounded-lg border border-slate-700 text-xs text-slate-300">
+              <div><strong>Program Affiliations:</strong></div>
+              <div class="text-slate-400">Google AI Startup Program • NOAA Ocean Enterprise</div>
+            </div>
+          </div>
+
+          <!-- Section Introductory Paragraph -->
+          <p class="text-sm text-slate-300 bg-slate-800/80 p-4 rounded-lg border border-slate-700 mb-6">
+            <strong>Section Purpose:</strong> Demonstrates how Bluemvmt Cloud Platform (BCP) directly resolves data fragmentation bottlenecks. Users can explore the BCP 4-Layer Architecture, compare performance efficiency metrics, review the Vatican Call to Action mapping matrix, and test the upgraded Data Insight AI™ natural language query simulator featuring live visual chart generation.
+          </p>
+
+          <!-- BCP 4-Layer Architecture Visual -->
+          <div class="mb-8">
+            <h3 class="text-sm font-bold text-slate-300 uppercase tracking-wider mb-4">BCP Unified Cloud Architecture</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              
+              <div class="bg-slate-800 p-4 rounded-xl border border-slate-700 relative">
+                <div class="text-xs font-bold text-brand-accent mb-1">Layer 1</div>
+                <h4 class="font-bold text-white text-sm mb-2">Ingest (Automated ETL)</h4>
+                <p class="text-xs text-slate-400 leading-relaxed">
+                  Automated ETL ingestion across IoT sensors, satellites, drones, marine buoys, DISN, and secure server networks.
+                </p>
+              </div>
+
+              <div class="bg-slate-800 p-4 rounded-xl border border-slate-700">
+                <div class="text-xs font-bold text-brand-accent mb-1">Layer 2</div>
+                <h4 class="font-bold text-white text-sm mb-2">Search & Vector Discovery</h4>
+                <p class="text-xs text-slate-400 leading-relaxed">
+                  AI-enhanced natural language search & vectorized discovery across multi-modal unstructured/structured environmental data.
+                </p>
+              </div>
+
+              <div class="bg-slate-800 p-4 rounded-xl border border-slate-700">
+                <div class="text-xs font-bold text-brand-accent mb-1">Layer 3</div>
+                <h4 class="font-bold text-white text-sm mb-2">Analyze (Data Insight AI™)</h4>
+                <p class="text-xs text-slate-400 leading-relaxed">
+                  Conversational AI ChatBot utilizing Retrieval-Augmented Generation (RAG) for real-time dataset interpretation & tipping point modeling.
+                </p>
+              </div>
+
+              <div class="bg-slate-800 p-4 rounded-xl border border-slate-700">
+                <div class="text-xs font-bold text-brand-accent mb-1">Layer 4</div>
+                <h4 class="font-bold text-white text-sm mb-2">Act (Customer Sidecar CDS)</h4>
+                <p class="text-xs text-slate-400 leading-relaxed">
+                  Customer Dedicated Sidecar (CDS) deploying insights into web apps, third-party GIS tools, or edge laptops during blackout events.
+                </p>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- BCP Efficiency Chart & Acceleration Matrix -->
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+            
+            <!-- Chart 3: Time Spent Wrangling vs BCP -->
+            <div class="bg-slate-800/90 p-5 rounded-xl border border-slate-700 flex flex-col">
+              <div class="mb-4">
+                <h4 class="font-bold text-white text-sm">Data Wrangling Time Bottleneck Resolution</h4>
+                <p class="text-xs text-slate-400">Comparing traditional climate scientist workflows vs BCP automated AI pipeline</p>
+              </div>
+              <div class="chart-container my-auto">
+                <canvas id="bcpChart"></canvas>
+              </div>
+              <div class="mt-4 text-xs text-slate-300 bg-slate-900 p-3 rounded border border-slate-700">
+                ⚡ <strong>Efficiency Impact:</strong> Eliminates the 79% time lost finding and reformatting datasets, allowing scientists and emergency responders to focus 85%+ of operational bandwidth on predictive execution.
+              </div>
+            </div>
+
+            <!-- BCP Mandate Mapping Matrix -->
+            <div class="bg-slate-800/90 p-5 rounded-xl border border-slate-700 flex flex-col justify-between">
+              <div>
+                <h4 class="font-bold text-white text-sm mb-3">Vatican Mandates accelerated by BCP Technical Engine</h4>
+                <div class="space-y-3 custom-scrollbar max-h-[280px] overflow-y-auto pr-2">
+                  
+                  <div class="bg-slate-900 p-3 rounded border border-slate-700 text-xs">
+                    <div class="text-brand-accent font-bold mb-1">SLCP Abatement & Methane Leaks</div>
+                    <div class="text-slate-300">RAG analysis of satellite and atmospheric IoT feeds rapidly isolates methane plumes for immediate regulatory enforcement.</div>
+                  </div>
+
+                  <div class="bg-slate-900 p-3 rounded border border-slate-700 text-xs">
+                    <div class="text-brand-accent font-bold mb-1">Marine Ecosystem Protection (SeaWatchAI)</div>
+                    <div class="text-slate-300">Sensor fusion across buoys, AUVs, and satellites enables continuous real-time monitoring of MPAs, acidification, and illegal fishing.</div>
+                  </div>
+
+                  <div class="bg-slate-900 p-3 rounded border border-slate-700 text-xs">
+                    <div class="text-brand-accent font-bold mb-1">Subnational Emergency Edge Deployment</div>
+                    <div class="text-slate-300">Customer Dedicated Sidecar (CDS) allows Data Insight AI™ to run locally on field laptops during power grid and communications outages.</div>
+                  </div>
+
+                  <div class="bg-slate-900 p-3 rounded border border-slate-700 text-xs">
+                    <div class="text-brand-accent font-bold mb-1">Climate Finance & ESG Audit Verification</div>
+                    <div class="text-slate-300">Combines ground sensors with satellite feeds to create transparent, tamper-proof audit trails for green bonds and CDR debt relief.</div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- LIVE CONVERSATIONAL SIMULATOR: Data Insight AI™ (UPGRADED WITH DYNAMIC CHARTS) -->
+          <div class="bg-slate-950 border border-slate-800 rounded-xl p-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+              <div class="flex items-center gap-2">
+                <span class="h-2.5 w-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                <h3 class="font-bold text-white text-sm">Data Insight AI™ Natural Language Simulator</h3>
+              </div>
+              <div class="flex items-center space-x-2 text-xs">
+                <span class="bg-slate-800 text-slate-300 px-2.5 py-1 rounded border border-slate-700">RAG Architecture Engine v3.4</span>
+                <span id="simConfidence" class="bg-emerald-950 text-emerald-400 border border-emerald-800 px-2.5 py-1 rounded font-mono text-[11px]">98.6% Confidence</span>
+              </div>
+            </div>
+
+            <p class="text-xs text-slate-400 mb-4">
+              Select a preset scenario below or enter a custom prompt. The BCP AI engine retrieves real-time sensor streams, executes multi-modal synthesis, and automatically generates illustrative data charts:
+            </p>
+
+            <!-- Sample Query Buttons -->
+            <div class="flex flex-wrap gap-2 mb-4">
+              <button onclick="runSimQuery('heat')" class="text-xs bg-slate-800 hover:bg-brand text-slate-200 hover:text-white py-1.5 px-3 rounded-lg border border-slate-700 transition flex items-center gap-1.5">
+                <span>🔥</span> Urban Heat Risk Projections
+              </button>
+              <button onclick="runSimQuery('marine')" class="text-xs bg-slate-800 hover:bg-brand text-slate-200 hover:text-white py-1.5 px-3 rounded-lg border border-slate-700 transition flex items-center gap-1.5">
+                <span>🪸</span> SeaWatchAI Coral & Ocean pH
+              </button>
+              <button onclick="runSimQuery('methane')" class="text-xs bg-slate-800 hover:bg-brand text-slate-200 hover:text-white py-1.5 px-3 rounded-lg border border-slate-700 transition flex items-center gap-1.5">
+                <span>🛰️</span> Methane Plume Anomaly Radar
+              </button>
+              <button onclick="runSimQuery('finance')" class="text-xs bg-slate-800 hover:bg-brand text-slate-200 hover:text-white py-1.5 px-3 rounded-lg border border-slate-700 transition flex items-center gap-1.5">
+                <span>🟢</span> ESG Carbon Sequestration Audit
+              </button>
+            </div>
+
+            <!-- Query Input Box -->
+            <div class="flex gap-2 mb-6">
+              <input type="text" id="simInput" placeholder="Type a conversational environmental query (e.g., 'Analyze coastal flood risk in Sector 3')..." 
+                     class="flex-1 bg-slate-900 border border-slate-700 text-white text-xs px-4 py-2.5 rounded-lg focus:outline-none focus:border-brand">
+            </div>
+
+            <!-- Dynamic Output Container: Text & Canvas Chart -->
+            <div id="simOutputArea" class="grid grid-cols-1 lg:grid-cols-12 gap-6 bg-slate-900 border border-slate-800 p-5 rounded-xl">
+              
+              <!-- Left: AI Text Output Console -->
+              <div class="lg:col-span-7 flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center justify-between border-b border-slate-800 pb-2 mb-3">
+                    <span class="text-xs font-bold uppercase tracking-wider text-brand-accent flex items-center gap-1.5">
+                      <span id="simStatusIcon">🤖</span> <span id="simStatusTitle">AI Response Console</span>
+                    </span>
+                    <span id="simQueryTime" class="text-[11px] font-mono text-slate-500">Latency: 14ms</span>
+                  </div>
+                  
+                  <div id="simTextContent" class="text-xs text-slate-300 space-y-3 font-sans leading-relaxed">
+                    <p class="text-slate-400 italic">
+                      // Select a scenario button above or enter a custom prompt to trigger real-time AI synthesis and generate visual telemetry charts.
+                    </p>
+                  </div>
+                </div>
+
+                <div id="simActionBanner" class="mt-4 pt-3 border-t border-slate-800/80 hidden">
+                  <div class="text-[11px] font-bold text-emerald-400 flex items-center gap-1">
+                    <span>✅ Policy Action Recommendation:</span>
+                  </div>
+                  <div id="simActionText" class="text-xs text-slate-300 mt-0.5"></div>
+                </div>
+              </div>
+
+              <!-- Right: Dynamic Chart Render Box -->
+              <div class="lg:col-span-5 bg-slate-950/80 p-4 rounded-lg border border-slate-800 flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center justify-between mb-2">
+                    <h4 id="simChartTitle" class="text-xs font-bold text-white uppercase tracking-wider">Telemetry Visualizer</h4>
+                    <span id="simChartTypeBadge" class="text-[10px] font-mono bg-slate-800 text-slate-300 px-2 py-0.5 rounded">Chart.js Live</span>
+                  </div>
+                  <p id="simChartSubtitle" class="text-[11px] text-slate-400 mb-3">Interactive data feed visualization</p>
+                </div>
+                
+                <div class="sim-chart-container my-auto flex items-center justify-center">
+                  <canvas id="simChartCanvas"></canvas>
+                </div>
+
+                <div class="mt-2 text-[10px] text-slate-500 text-center font-mono">
+                  Bluemvmt Data Insight Engine • Dynamic Render
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-950 border-t border-slate-800 text-slate-400 py-8 mt-12">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs">
+        <div class="flex items-center space-x-3">
+          <img src="BMLogoWhite.png" alt="Bluemvmt Logo" class="h-6 object-contain">
+          <span>© 2026 Bluemvmt, Inc. All rights reserved.</span>
+        </div>
+        <div class="text-center md:text-right">
+          <span>Pontifical Academy of Sciences & Pontifical Academy of Social Sciences Synthesis</span>
+          <div class="text-slate-600 mt-0.5">Protected Portal • Bluemvmt Cloud Platform (BCP)</div>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- JavaScript Logic & Interactive Chart Instantiation -->
+  <script>
+    // State Variables
+    let isAuthenticated = false;
+    let chartsInitialized = false;
+    let simChartInstance = null;
+
+    // Directives Data from Call to Action (Page 405)
+    const mandatesData = [
+      { id: 1, title: "Human Right to Resilience", focus: "Legal Codification", desc: "Mandates legal recognition of resilience as a fundamental human right grounded in international law and European Court of Human Rights precedents." },
+      { id: 2, title: "Poly-Crisis Risk Integration", focus: "Comprehensive Planning", desc: "Simultaneously manages interconnected risks: climate warming, rapid biodiversity loss, environmental pollution, and extreme wealth inequality." },
+      { id: 3, title: "Dual-Timeline Strategy", focus: "MAST Synchronization", desc: "Combines a 25-year sprint targeting non-CO2 super-pollutants with a century marathon for carbon neutrality and CDR." },
+      { id: 4, title: "SLCP Abatement Targets", focus: "Immediate Rate Reduction", desc: "Directs 40-45% reduction in methane, 85% in HFCs, and 35% in black carbon to cut near-term warming rates by 50%." },
+      { id: 5, title: "Legacy Carbon Removal", focus: "300B Ton Extraction", desc: "Scales nature-based and technological Carbon Dioxide Removal (CDR) to remove 300 billion tons of atmospheric CO2 over 40 years." },
+      { id: 6, title: "Support for Vulnerable Groups", focus: "Non-Debt Finance", desc: "Directs non-debt climate finance, clean technologies, and health resources to the bottom 3 billion citizens and 46 LDCs." },
+      { id: 7, title: "Ecosystem Preservation", focus: "Global Sink Protection", desc: "Mandates strict preservation of the Amazon, Congo Basin, drylands, peatlands, mangroves, and oceanic ecosystems." },
+      { id: 8, title: "Built Environment Evolution", focus: "Urban Carbon Sinks", desc: "Transforms urban housing into carbon sinks using mass timber, organic building codes, and clean microgrids." },
+      { id: 9, title: "Subnational Empowerment", focus: "Mayors & Governors", desc: "Formally integrates municipal leaders into UNFCCC global policy formulation and sub-regional resilience execution." }
+    ];
+
+    // Password Validation
+    function handleAuth(e) {
+      e.preventDefault();
+      const pwd = document.getElementById('passwordInput').value;
+      const errorEl = document.getElementById('authError');
+      
+      if (pwd === 'Blue4You') {
+        isAuthenticated = true;
+        document.getElementById('authOverlay').classList.add('opacity-0');
+        setTimeout(() => {
+          document.getElementById('authOverlay').classList.add('hidden');
+          document.getElementById('appContainer').classList.remove('hidden');
+          document.getElementById('appContainer').classList.add('flex');
+          initMandatesGrid();
+          initCharts();
+          // Pre-load default simulation chart
+          runSimQuery('heat');
+        }, 300);
+      } else {
+        errorEl.classList.remove('hidden');
+      }
+    }
+
+    function lockApp() {
+      isAuthenticated = false;
+      document.getElementById('passwordInput').value = '';
+      document.getElementById('authError').classList.add('hidden');
+      document.getElementById('appContainer').classList.add('hidden');
+      document.getElementById('authOverlay').classList.remove('hidden');
+      document.getElementById('authOverlay').classList.remove('opacity-0');
+    }
+
+    function scrollToSection(id) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    // Render Call to Action Directives
+    function initMandatesGrid() {
+      const container = document.getElementById('mandatesGrid');
+      container.innerHTML = mandatesData.map(m => `
+        <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl hover:border-brand hover:shadow-sm transition flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-white bg-brand px-2 py-0.5 rounded-full">Directive ${m.id}</span>
+              <span class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">${m.focus}</span>
+            </div>
+            <h4 class="font-bold text-slate-900 text-sm mb-2">${m.title}</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">${m.desc}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Chart.js Setup
+    function initCharts() {
+      if (chartsInitialized) return;
+      chartsInitialized = true;
+
+      // Chart 1: SLCP Abatement Targets
+      const ctx1 = document.getElementById('slcpChart').getContext('2d');
+      new Chart(ctx1, {
+        type: 'bar',
+        data: {
+          labels: ['Methane (CH4)', 'HFCs', 'Black Carbon Soot', 'Nitrous Oxide (N2O)'],
+          datasets: [{
+            label: 'Target Reduction (%)',
+            data: [42.5, 85, 35, 20],
+            backgroundColor: ['#0084B4', '#00A3E0', '#334155', '#64748B'],
+            borderRadius: 6
+          }]
+        },
+        options: {
+          indexAxis: 'y',
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  return ` Target Reduction: ${context.parsed.x}% relative to baseline`;
+                }
+              }
+            }
+          },
+          scales: {
+            x: {
+              max: 100,
+              title: { display: true, text: 'Reduction Benchmark Target (%)', font: { size: 11 } },
+              grid: { color: '#f1f5f9' }
+            },
+            y: {
+              grid: { display: false }
+            }
+          }
+        }
+      });
+
+      // Chart 2: Emissions vs Loss Disparity
+      const ctx2 = document.getElementById('inequityChart').getContext('2d');
+      new Chart(ctx2, {
+        type: 'doughnut',
+        data: {
+          labels: ['Top 1 Billion Wealthiest (50% GHG / Low Damage)', 'Bottom 3 Billion Poorest (<10% GHG / 75% Losses)', 'Middle 4 Billion Global Pop', '46 LDCs (1% GHG / High Risk)'],
+          datasets: [{
+            data: [50, 37.5, 11.5, 1],
+            backgroundColor: ['#0084B4', '#EF4444', '#94A3B8', '#F59E0B'],
+            borderWidth: 2,
+            borderColor: '#ffffff'
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: { font: { size: 10 }, boxWidth: 12 }
+            }
+          }
+        }
+      });
+
+      // Chart 3: BCP Wrangling Time Savings
+      const ctx3 = document.getElementById('bcpChart').getContext('2d');
+      new Chart(ctx3, {
+        type: 'bar',
+        data: {
+          labels: ['Traditional Climate Analytics', 'Bluemvmt Cloud Platform (BCP)'],
+          datasets: [
+            {
+              label: 'Data Wrangling / Cleaning Overhead (%)',
+              data: [79, 12],
+              backgroundColor: '#334155',
+              borderRadius: 4
+            },
+            {
+              label: 'Active Analysis & Decision Time (%)',
+              data: [21, 88],
+              backgroundColor: '#0084B4',
+              borderRadius: 4
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: { stacked: true, grid: { display: false } },
+            y: { stacked: true, max: 100, title: { display: true, text: 'Percentage of Operational Time (%)', font: { size: 11 } }, grid: { color: '#334155' } }
+          },
+          plugins: {
+            legend: { position: 'bottom', labels: { font: { size: 10 }, color: '#cbd5e1' } }
+          }
+        }
+      });
+    }
+
+    // Conversational Simulator Datasets & Responses
+    const simQueries = {
+      heat: {
+        title: "Urban Heat Island & Microclimate Risk Analysis",
+        subtitle: "Sectoral 24-Hour Temperature Trajectory vs City Baseline",
+        q: "Identify urban sub-districts facing highest extreme heat risk combined with elevated populations over 65 during the next 24 hours.",
+        text: `
+          <div class="bg-red-950/40 border border-red-800/60 p-3 rounded-lg mb-3">
+            <span class="text-red-400 font-bold uppercase text-[11px] tracking-wider">⚠️ Extreme Thermal Alert</span>
+            <p class="text-slate-200 text-xs mt-1">Sector 4 and Sector 9 exceed critical safety threshold (>40°C) between 12:00 and 16:00.</p>
+          </div>
+          <p><strong>Telemetry Fusion Summary:</strong> Ingesting 48 micro-weather IoT stations + NOAA GOES surface temp layer.</p>
+          <ul class="list-disc pl-4 space-y-1 text-slate-300 my-2">
+            <li><strong class="text-white">Sector 4 (Northern Metro):</strong> Peak 41.2°C • Senior Density: 28.4% (Vulnerable Pop: 42,100).</li>
+            <li><strong class="text-white">Sector 9 (Industrial East):</strong> Peak 42.8°C • Urban Heat Island Anomaly: +3.4°C due to low canopy cover.</li>
+          </ul>
+        `,
+        action: "Deploy 6 mobile cooling stations to Sector 4 centers; notify grid operator to activate emergency peak-shaving microgrids.",
+        chartType: "line",
+        chartData: {
+          labels: ['06:00', '09:00', '12:00', '15:00', '18:00', '21:00'],
+          datasets: [
+            {
+              label: 'Sector 4 Surface Temp (°C)',
+              data: [26.2, 31.5, 38.4, 41.2, 37.8, 32.1],
+              borderColor: '#EF4444',
+              backgroundColor: 'rgba(239, 68, 68, 0.15)',
+              fill: true,
+              tension: 0.3
+            },
+            {
+              label: 'Sector 9 Industrial (°C)',
+              data: [27.5, 33.1, 40.1, 42.8, 39.5, 33.8],
+              borderColor: '#F59E0B',
+              backgroundColor: 'rgba(245, 158, 11, 0.1)',
+              fill: true,
+              tension: 0.3
+            },
+            {
+              label: 'Metro Baseline (°C)',
+              data: [24.0, 27.5, 33.0, 35.5, 32.0, 28.0],
+              borderColor: '#0084B4',
+              borderDash: [4, 4],
+              fill: false
+            }
+          ]
+        }
+      },
+      marine: {
+        title: "SeaWatchAI Ocean Acidification & SST Telemetry",
+        subtitle: "30-Day Trend Analysis across Marine Protected Area (MPA)",
+        q: "Analyze Marine Protected Area (MPA) ocean acidification and SST trends across blue carbon mangrove buffers over the past 30 days.",
+        text: `
+          <div class="bg-amber-950/40 border border-amber-800/60 p-3 rounded-lg mb-3">
+            <span class="text-amber-400 font-bold uppercase text-[11px] tracking-wider">🪸 Coral Bleaching Early Warning</span>
+            <p class="text-slate-200 text-xs mt-1">Sea surface temperature sustained >1.1°C above historical seasonal baseline for 14 consecutive days.</p>
+          </div>
+          <p><strong>SeaWatchAI Acoustic & Satellite Array Output:</strong></p>
+          <ul class="list-disc pl-4 space-y-1 text-slate-300 my-2">
+            <li><strong class="text-white">Sea Surface Temp (SST):</strong> Reached 28.4°C (+1.1°C baseline deviation).</li>
+            <li><strong class="text-white">Ocean Acidification:</strong> pH dropped to 7.82 in Southern Lagoon (Inhibits calcification).</li>
+            <li><strong class="text-white">Mangrove Buffer Resilience:</strong> Canopy cover stable (+0.4% regrowth post-restoration bond).</li>
+          </ul>
+        `,
+        action: "Restrict commercial vessel transit speeds in MPA Zone 2 to reduce wake erosion and water turbidity.",
+        chartType: "line",
+        chartData: {
+          labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4 (Current)'],
+          datasets: [
+            {
+              label: 'Sea Surface Temp (°C)',
+              data: [27.3, 27.8, 28.1, 28.4],
+              borderColor: '#00A3E0',
+              backgroundColor: 'rgba(0, 163, 224, 0.15)',
+              yAxisID: 'yTemp',
+              fill: true
+            },
+            {
+              label: 'Lagoon pH Level',
+              data: [8.05, 7.98, 7.90, 7.82],
+              borderColor: '#10B981',
+              yAxisID: 'yPH'
+            }
+          ]
+        }
+      },
+      methane: {
+        title: "Satellite Plume Radar & Methane (CH4) Leak Anomaly",
+        subtitle: "Industrial Hub Emissions vs Regulatory Cap (Metric Tons/hr)",
+        q: "Scan industrial corridor for anomalous methane (CH4) emissions exceeding 40% threshold over baseline.",
+        text: `
+          <div class="bg-red-950/40 border border-red-800/60 p-3 rounded-lg mb-3">
+            <span class="text-red-400 font-bold uppercase text-[11px] tracking-wider">🚨 Major Point-Source Emission Spike</span>
+            <p class="text-slate-200 text-xs mt-1">Hub Delta exceeds regional compliance baseline by +148% (12.4 t CH4/hr vs 5.0 t cap).</p>
+          </div>
+          <p><strong>Vector Search & Satellite Spectrometry Findings:</strong></p>
+          <ul class="list-disc pl-4 space-y-1 text-slate-300 my-2">
+            <li><strong class="text-white">Location Pinpoint:</strong> Lat 12.431, Long -68.122 (Processing Complex Delta).</li>
+            <li><strong class="text-white">Plume Velocity:</strong> Est. 12.4 metric tons CH4 per hour venting into atmospheric layer.</li>
+            <li><strong class="text-white">Regulatory Target:</strong> Violates Vatican SLCP Abatement Mandate 4.</li>
+          </ul>
+        `,
+        action: "Issue automated cease-venting regulatory order to Complex Delta operator; dispatch drone infrared camera crew.",
+        chartType: "bar",
+        chartData: {
+          labels: ['Hub Alpha', 'Hub Delta (Anomalous)', 'Hub Gamma', 'Hub Epsilon'],
+          datasets: [
+            {
+              label: 'Measured CH4 Emission (Tons/hr)',
+              data: [3.2, 12.4, 2.8, 4.1],
+              backgroundColor: ['#0084B4', '#EF4444', '#0084B4', '#0084B4'],
+              borderRadius: 6
+            },
+            {
+              label: 'Regulatory Baseline Cap',
+              data: [5.0, 5.0, 5.0, 5.0],
+              type: 'line',
+              borderColor: '#F59E0B',
+              borderDash: [4, 4],
+              fill: false
+            }
+          ]
+        }
+      },
+      finance: {
+        title: "ESG Resilience Bond Carbon Sequestration Verification",
+        subtitle: "Audit Distribution across $50M Ecosystem Asset Portfolio (k Tons CO2)",
+        q: "Verify ESG carbon sequestration metrics for the $50M Global Resilience Bond portfolio.",
+        text: `
+          <div class="bg-emerald-950/40 border border-emerald-800/60 p-3 rounded-lg mb-3">
+            <span class="text-emerald-400 font-bold uppercase text-[11px] tracking-wider">🟢 Audit Verification: PASSED</span>
+            <p class="text-slate-200 text-xs mt-1">Total Verified Sequestration: 142,000 Metric Tons CO2e (104% of annual target).</p>
+          </div>
+          <p><strong>Ground Sensor & Satellite Biomass Dual Verification:</strong></p>
+          <ul class="list-disc pl-4 space-y-1 text-slate-300 my-2">
+            <li><strong class="text-white">Coastal Wetlands:</strong> 52,000 tons CO2e sequestered (36.6% portfolio weight).</li>
+            <li><strong class="text-white">Peatland Restoration:</strong> 45,000 tons CO2e sequestered (31.7% weight).</li>
+            <li><strong class="text-white">Mangrove Buffers:</strong> 30,000 tons CO2e sequestered (21.1% weight).</li>
+          </ul>
+        `,
+        action: "Publish tamper-proof audit certificate to green bond registry; release Tier 2 coupon interest discount to municipality.",
+        chartType: "doughnut",
+        chartData: {
+          labels: ['Coastal Wetlands (52k t)', 'Peatland Restoration (45k t)', 'Mangrove Buffers (30k t)', 'Soil Biochar (15k t)'],
+          datasets: [{
+            data: [52, 45, 30, 15],
+            backgroundColor: ['#0084B4', '#10B981', '#00A3E0', '#6366F1'],
+            borderWidth: 2,
+            borderColor: '#0f172a'
+          }]
+        }
+      }
+    };
+
+    function runSimQuery(type) {
+      const data = simQueries[type];
+      if (!data) return;
+
+      document.getElementById('simInput').value = data.q;
+      
+      // UI Loading state
+      document.getElementById('simStatusIcon').innerText = '⚡';
+      document.getElementById('simStatusTitle').innerText = 'BCP Data Insight AI™ Synthesizing...';
+      document.getElementById('simQueryTime').innerText = 'Processing RAG...';
+      document.getElementById('simTextContent').innerHTML = `
+        <div class="flex items-center space-x-2 text-brand-accent py-4">
+          <span class="animate-spin text-lg">⏳</span>
+          <span>Searching vector database across satellite arrays, ground IoT, and Vatican policy corpus...</span>
+        </div>
+      `;
+
+      setTimeout(() => {
+        document.getElementById('simStatusIcon').innerText = '🤖';
+        document.getElementById('simStatusTitle').innerText = data.title;
+        document.getElementById('simQueryTime').innerText = 'Latency: 18ms';
+        document.getElementById('simTextContent').innerHTML = data.text;
+        
+        document.getElementById('simActionBanner').classList.remove('hidden');
+        document.getElementById('simActionText').innerText = data.action;
+
+        document.getElementById('simChartTitle').innerText = data.title;
+        document.getElementById('simChartSubtitle').innerText = data.subtitle;
+
+        renderSimChart(data.chartType, data.chartData);
+      }, 350);
+    }
+
+    function executeSimCustom() {
+      const queryVal = document.getElementById('simInput').value.trim();
+      if (!queryVal) return;
+
+      document.getElementById('simStatusIcon').innerText = '⚡';
+      document.getElementById('simStatusTitle').innerText = 'Custom Query Processing';
+      document.getElementById('simQueryTime').innerText = 'Latency: 22ms';
+
+      document.getElementById('simTextContent').innerHTML = `
+        <div class="bg-slate-800/80 p-3 rounded-lg border border-slate-700 mb-3">
+          <span class="text-brand-accent font-bold uppercase text-[11px]">User Prompt Executed:</span>
+          <p class="text-white text-xs mt-0.5 font-mono">"${queryVal}"</p>
+        </div>
+        <p><strong>BCP Multi-Modal Analysis:</strong> RAG engine matched custom input against local municipal telemetry and Vatican Resilience Framework datasets.</p>
+        <ul class="list-disc pl-4 space-y-1 text-slate-300 my-2">
+          <li><strong class="text-white">Observational Data Alignment:</strong> 94.2% match with subnational adaptation indices.</li>
+          <li><strong class="text-white">Simulated Impact Factor:</strong> Positive trajectory towards halving 10-year localized exposure risks.</li>
+        </ul>
+      `;
+
+      document.getElementById('simActionBanner').classList.remove('hidden');
+      document.getElementById('simActionText').innerText = "Incorporate custom vector output into subnational emergency planning dashboard.";
+
+      document.getElementById('simChartTitle').innerText = "Custom Query Predictive Resilience Score";
+      document.getElementById('simChartSubtitle').innerText = "Baseline vs BCP Optimized Implementation";
+
+      // Dynamic fallback chart for custom queries
+      const customChartData = {
+        labels: ['Baseline Risk', 'Current Progress', 'BCP AI Model', 'Target Resilience'],
+        datasets: [{
+          label: 'System Score Index',
+          data: [42, 68, 89, 95],
+          backgroundColor: ['#64748B', '#0084B4', '#10B981', '#F59E0B'],
+          borderRadius: 6
+        }]
+      };
+
+      renderSimChart('bar', customChartData);
+    }
+
+    function renderSimChart(type, data) {
+      const canvas = document.getElementById('simChartCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+
+      if (simChartInstance) {
+        simChartInstance.destroy();
+      }
+
+      let chartConfig = {
+        type: type,
+        data: data,
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: true,
+              position: type === 'doughnut' ? 'bottom' : 'top',
+              labels: { color: '#cbd5e1', font: { size: 10 }, boxWidth: 10 }
+            },
+            tooltip: {
+              backgroundColor: '#0f172a',
+              titleColor: '#00A3E0',
+              bodyColor: '#ffffff',
+              borderColor: '#334155',
+              borderWidth: 1
+            }
+          }
+        }
+      };
+
+      if (type !== 'doughnut') {
+        chartConfig.options.scales = {
+          x: { grid: { color: '#1e293b' }, ticks: { color: '#94a3b8', font: { size: 10 } } },
+          y: { grid: { color: '#1e293b' }, ticks: { color: '#94a3b8', font: { size: 10 } } }
+        };
+
+        if (data.datasets[1] && data.datasets[1].yAxisID === 'yPH') {
+          chartConfig.options.scales.yTemp = { type: 'linear', position: 'left', grid: { color: '#1e293b' }, ticks: { color: '#00A3E0' } };
+          chartConfig.options.scales.yPH = { type: 'linear', position: 'right', grid: { display: false }, ticks: { color: '#10B981' } };
+        }
+      }
+
+      simChartInstance = new Chart(ctx, chartConfig);
+    }
+  </script>
+</body>
+</html>
